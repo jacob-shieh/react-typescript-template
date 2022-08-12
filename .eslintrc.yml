@@ -1,0 +1,44 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - airbnb
+  - prettier
+  - eslint:recommended
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:prettier/recommended
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+plugins:
+  - '@typescript-eslint'
+  - prettier
+settings:
+  import/resolver:
+    node:
+      paths:
+        - 'src'
+      extensions:
+        - '.js'
+        - '.ts'
+        - '.d.ts'
+        - '.tsx'
+rules:
+  import/extensions:
+    - error
+    - ignorePackages
+    - js: never
+      jsx: never
+      ts: never
+      tsx: never
+  react/jsx-filename-extension:
+    - 1
+    - extensions:
+        - .js
+        - .ts
+        - tsx
+  no-unused-expressions: 'off'
