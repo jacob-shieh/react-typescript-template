@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.App-body {
+  min-width: 800px; /* your desired width */
+  min-height: 600px;
+  max-width: 100%;
+  position: relative;
+  vertical-align:middle;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -6,11 +6,8 @@
   "permissions": [
     "storage",
     "activeTab",
-    "scripting",
-    "http://*/*",
-    "https://*/*"
+    "scripting"
   ],
-  "background": { "service_worker": "background.js" },
   "action": {
     "default_popup": "index.html"
   },
@@ -22,5 +19,5 @@
       "run_at": "document_end"
     }
   ],
-  "host_permissions": ["*://*/*"]
+  "host_permissions": ["https://f1tv.formula1.com/detail/*"]
 }
