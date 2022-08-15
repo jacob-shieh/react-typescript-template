@@ -1,5 +1,11 @@
-import { Button, ButtonGroup, Paper, TextField } from '@mui/material'
-import Peer, { DataConnection } from 'peerjs'
+import {
+  Button,
+  ButtonGroup,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material'
+import Peer from 'peerjs'
 import React, { useState } from 'react'
 
 import ClipboardButton from '../components/ClipboardButton'
@@ -10,6 +16,8 @@ function PeerComponent() {
   const [connectionIsStarting, setConnectionIsStarting] =
     useState<boolean>(false)
   const [remotePeerId, setRemotePeerId] = useState<string>('')
+  const [data, setData] = useState()
+  const [dataToSend, setSendData] = useState<string>()
   const {
     state: { peer, peerId, dataConnection },
     actions: { setPeer, setPeerId, setDataConnection },
@@ -41,11 +49,24 @@ function PeerComponent() {
   }
 
   const handleDisconnectToPeer = () => {
-    dataConnection?.close
+    dataConnection?.close()
   }
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRemotePeerId(event.target.value)
+  }
+
+  dataConnection?.on('data', (recievedData: any) => {
+    setData(recievedData)
+  })
+
+  const sendData = () => {
+    dataConnection?.send(dataToSend)
+  }
+  const handleMessageOnChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSendData(event.target.value)
   }
 
   return (
@@ -56,20 +77,20 @@ function PeerComponent() {
           onClick={handleStartConnection}
           disabled={isConnectedToServer || connectionIsStarting}
         >
-          Start connection
+          Go online
         </Button>
         <Button
           variant="contained"
           onClick={handleEndConnection}
           disabled={peerId === ''}
         >
-          End connection
+          Go offline
         </Button>
       </ButtonGroup>
-      <div>
+      <Typography variant="body1">
         Peer Id:
         {peerId === '' ? null : <ClipboardButton copyText={peerId} />}
-      </div>
+      </Typography>
       <TextField
         id="peer-id-field"
         label="Remote Peer Id"
@@ -81,18 +102,30 @@ function PeerComponent() {
         <Button
           variant="contained"
           onClick={handleConnectToRemotePeer}
-          disabled={!isConnectedToServer}
+          disabled={!!dataConnection || !remotePeerId}
         >
           Connect
         </Button>
         <Button
           variant="contained"
           onClick={handleDisconnectToPeer}
-          disabled={!isConnectedToServer}
+          disabled={!dataConnection}
         >
           Disconnect
         </Button>
       </ButtonGroup>
+      <Typography variant="body1">
+        {dataConnection !== undefined
+          ? `Connected to: ${dataConnection.peer}`
+          : ''}
+      </Typography>
+      <TextField
+        id="message"
+        variant="standard"
+        onChange={handleMessageOnChange}
+      />
+      <Button variant="contained" onClick={sendData} />
+      <Typography variant="body1">{data}</Typography>
     </Paper>
   )
 }

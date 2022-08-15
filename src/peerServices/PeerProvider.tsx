@@ -13,6 +13,14 @@ function PeerProvider({ children }: any) {
     actions: { setPeer, setPeerId, setDataConnection },
   }
 
+  dataConnection?.on('close', () => {
+    setDataConnection(undefined)
+  })
+
+  peer?.on('connection', (establishedDataConnection) => {
+    setDataConnection(establishedDataConnection)
+  })
+
   return <PeerContext.Provider value={value}>{children}</PeerContext.Provider>
 }
 
