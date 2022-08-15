@@ -1,12 +1,12 @@
 import React from 'react'
 
 type ClipboardButtonProps = {
-  copyText: string
+  copyText: string | undefined
 }
 
 function ClipboardButton({ copyText }: ClipboardButtonProps) {
   function handleClick() {
-    navigator.clipboard.writeText(copyText)
+    navigator.clipboard.writeText(copyText || '')
   }
 
   return (

@@ -1,16 +1,22 @@
-import Peer from 'peerjs'
-import { Dispatch, SetStateAction, createContext, useState } from 'react'
+import Peer, { DataConnection } from 'peerjs'
+import { createContext } from 'react'
 
 type PeerContextType = {
-  state: { peer: Peer | undefined }
-  actions: { setPeer: any }
+  state: {
+    peer: Peer | undefined
+    peerId: string | undefined
+    dataConnection: DataConnection | undefined
+  }
+  actions: { setPeer: any; setPeerId: any; setDataConnection: any }
 }
 
-// const [_, setPeer] = useState<Peer>()
-
 const PeerContext = createContext<PeerContextType>({
-  state: { peer: undefined },
-  actions: { setPeer: undefined },
+  state: { peer: undefined, peerId: undefined, dataConnection: undefined },
+  actions: {
+    setPeer: undefined,
+    setPeerId: undefined,
+    setDataConnection: undefined,
+  },
 })
 
 export default PeerContext
