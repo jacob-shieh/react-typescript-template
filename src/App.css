@@ -3,8 +3,8 @@
 }
 
 .App-body {
-  min-width: 800px; /* your desired width */
-  min-height: 600px;
+  min-width: 400px; /* your desired width */
+  min-height: 100%;
   max-width: 100%;
   position: relative;
   vertical-align:middle;
